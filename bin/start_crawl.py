@@ -35,14 +35,14 @@ def start_crawl(scraping_type):
 	else:
 		#read URL file
 		data = pd.read_csv(config.get('input-data', 'filepath'), delimiter=config.get('input-data', 'delimiter'), 
-						   encoding=config.get('input-data', 'encoding'), index_col=config.get('input-data', 'ID'), error_bad_lines=False, engine="python")
+						   encoding=config.get('input-data', 'encoding'), index_col=config.get('input-data', 'ID'), on_bad_lines='skip', engine="python")
 
 		#get ISO codes for language detection
 		if config.get('spider-settings', 'language') == "None":
 			language_ISOs = ""
 		else:
 			language = config.get('spider-settings', 'language')
-			ISO_codes = pd.read_csv(script_dir_edit + r"\misc\ISO_language_codes.txt", delimiter="\t", encoding="utf-8", error_bad_lines=False, engine="python")
+			ISO_codes = pd.read_csv(script_dir_edit + r"\misc\ISO_language_codes.txt", delimiter="\t", encoding="utf-8", on_bad_lines='skip', engine="python")
 			language_ISOs = ISO_codes.loc[ISO_codes["language"] == language][["ISO1","ISO2","ISO3"]].iloc[0].tolist()
 			language_ISOs = "{},{},{}".format(language_ISOs[0], language_ISOs[1], language_ISOs[2])
 			

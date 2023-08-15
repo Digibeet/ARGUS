@@ -24,3 +24,9 @@ $RECYCLE.BIN/
 settings.txt
 settings.txt
 settings.txt
+
+#Log files
+*.log
+
+#url_test_folder
+/websites
