@@ -30,3 +30,7 @@ settings.txt
 
 #url_test_folder
 /websites
+*.pyc
+*.jl
+dbs/ARGUS.db
+bin/settings.txt
