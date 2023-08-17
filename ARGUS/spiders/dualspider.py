@@ -33,12 +33,12 @@ class DualSpider(scrapy.Spider):
 ##################################################################
     
     #load URLs from text file defined in given parameter
-    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", pdfscrape="off", *args, **kwargs):
+    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="URL", language="", prefer_short_urls="on", pdfscrape="off", *args, **kwargs):
         super(DualSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
         data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", on_bad_lines='skip', engine="python")
-        self.allowed_domains = [url.split("www.")[-1].lower() for url in list(data[url_col])]
-        self.start_urls = ["http://" + url.lower() for url in self.allowed_domains]
+        self.allowed_domains = [self.Get_domain(url) for url in list(data[url_col])]
+        self.start_urls = ["https://" + self.Get_domain(url).lower() for url in list(data[url_col])]
         self.IDs = [ID for ID in list(data[ID])]
         self.site_limit = int(limit)
         self.url_chunk = url_chunk
@@ -49,8 +49,11 @@ class DualSpider(scrapy.Spider):
         
 ##################################################################
 # HELPER FUNCTIONS
-##################################################################      
- 
+################################################################## 
+#     
+    def Get_domain(self, url):
+        ext = tldextract.extract(url)
+        return ext.domain + "." + ext.suffix
     
     #filetypes to be filtered
     filetypes = set(filetype for filetype in ['mng', 'pct', 'bmp', 'gif', 'jpg', 'jpeg', 'png', 'pst', 'psp', 'tif', 'tiff', 'ai', 'drw', 'dxf', 'eps', 'ps', 'svg',
@@ -74,24 +77,24 @@ class DualSpider(scrapy.Spider):
         if isinstance(response, str):
             tld = tldextract.extract(response)
             if tld.subdomain != "":
-                domain = tld.subdomain + "." + tld.registered_domain
+                domain = tld.subdomain + "." + tld.domain
                 return domain
             else:
-                domain = tld.registered_domain
+                domain = tld.domain
                 return domain
         #if scrapy response object
         else:
             tld = tldextract.extract(response.url)
             if tld.subdomain != "":
-                domain = tld.subdomain + "." + tld.registered_domain
+                domain = tld.subdomain + "." + tld.domain
                 return domain
             else:
-                domain = tld.registered_domain
+                domain = tld.domain
                 return domain
 
     #function which checks if there has been a redirect from the starting url
     def checkRedirectDomain(self, response):
-        return tldextract.extract(response.url).registered_domain != tldextract.extract(response.request.meta.get("download_slot")).registered_domain
+        return tldextract.extract(response.url).domain != tldextract.extract(response.request.meta.get("download_slot")).domain
     
     #function which extracts text using tags
     def extractText(self, response):
@@ -347,7 +350,7 @@ class DualSpider(scrapy.Spider):
             
         #check urlstack for links to other domains
         for url in urlstack:
-            url = url.replace("\r\n", "")
+            url = url.replace("\r", "")
             url = url.replace("\n", "")
             domain = self.subdomainGetter(url).split("www.")[-1] 
             #if url points to domain that is not the originally requested domain...

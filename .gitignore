@@ -36,3 +36,5 @@ bin/settings.txt
 
 #virtual environment
 /env/*
+test/test_urls_scraped_texts.csv
+dbs/ARGUS.db

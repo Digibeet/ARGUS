@@ -64,6 +64,7 @@ def postprocessing(cwd=None):
                         print (r"Processed 75 % of files")
                     elif tick == int(len_output_files):
                         print (r"Processed 100 % of files")
+            outfile.close()
     
     print("Merging done. Skipped {} websites because of formatting errors. Deleting leftovers...".format(errors))
     time.sleep(5)
@@ -81,5 +82,6 @@ def postprocessing(cwd=None):
 
     messagebox.showinfo("Postprocessing successful", "Postprocessing successful. Scraped data can be found:\n{}".format(output + "_scraped_texts.csv"))
 
-
-
+if __name__ == "__main__":
+    print("Starting post processing")
+    postprocessing("C:\workspace\genAI\B2B_sales_tool\ARGUS")

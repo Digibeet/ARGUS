@@ -21,15 +21,15 @@ class argus_settings:
 	filepath = sys.argv[1] 	# file path for list containing URLs
 		
 	# settings for ARGUS spider
-	delimiter = "\t"    
+	delimiter = ";"    
 	encoding = "utf-8"
-	index_col = "id"		# column with IDs
-	url_col = "url"		# column with URLs
-	lang = "German"		# language
-	n_cores = 1		# number of cores
+	index_col = "ID"		# column with IDs
+	url_col = "URL"		# column with URLs
+	lang = "None"		# language
+	n_cores = 8		# number of cores
 	limit = 10		# scraping limit
-	log_level = "INFO"
-	prefer_short_urls = "on"
+	log_level = "WARNING"
+	prefer_short_urls = "off"
 	pdfscrape = "off"
 
 # Execute scraping
@@ -39,4 +39,3 @@ if __name__ == "__main__":
 	# Start crawling
 	from bin import start_crawl_steering
 	start_crawl_steering.start_crawl()
-

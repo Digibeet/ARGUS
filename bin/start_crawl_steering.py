@@ -48,7 +48,7 @@ def start_crawl():
         time.sleep(3)
     else:
 		#read URL file
-        data = pd.read_csv(filepath, delimiter=delimiter, encoding=encoding, index_col=index_col, error_bad_lines=False, engine="python")
+        data = pd.read_csv(filepath, delimiter=delimiter, encoding=encoding, index_col=index_col, on_bad_lines='skip', engine="python")
 
 		#get ISO codes for language detection
         if lang == "None":
