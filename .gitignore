@@ -22,8 +22,7 @@ $RECYCLE.BIN/
 #Spyder
 /.spyproject
 settings.txt
-settings.txt
-settings.txt
+
 
 #Log files
 *.log
@@ -34,3 +33,6 @@ settings.txt
 *.jl
 dbs/ARGUS.db
 bin/settings.txt
+
+#virtual environment
+/env/*
