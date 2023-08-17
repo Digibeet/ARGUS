@@ -456,11 +456,11 @@ def information_box():
     'author: Jan Kinne',
     'years of development: 2018-2020']
     messagebox.showinfo('Information', "\n".join(lines))
-
+    
 width = 25
 height = 25
 img = Image.open(script_dir + r"\misc\info.gif")           # source: https://de.wikipedia.org/wiki/Datei:Information_icon.svg
-img = img.resize((width,height), Image.ANTIALIAS)
+img = img.resize((width,height), Image.Resampling.LANCZOS)
 image =  ImageTk.PhotoImage(img)
 
 tk.Button(master, image=image, command=information_box, width=25).grid(row=20, column=1, sticky=tk.W + tk.E)

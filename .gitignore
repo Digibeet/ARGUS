@@ -30,3 +30,7 @@ settings.txt
 
 #url_test_folder
 /websites
+*.pyc
+
+#virtual environment
+/env/*
